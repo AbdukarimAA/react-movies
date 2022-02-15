@@ -17,7 +17,7 @@ class Search extends Component {
     render() {
         return <div className="row">
             <div className="col s12">
-                This is an inline input field:
+
                 <div className="input-field">
                     <input
                         className="validate"

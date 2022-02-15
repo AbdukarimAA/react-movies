@@ -15,14 +15,28 @@ class Main extends Component {
     componentDidMount() {
         fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=avengers`)
             .then((response) => response.json())
-            .then((data) => this.setState({movies: data.Search, loading: false}))
+            .then((data) => this.setState({movies: data.Search}))
     }
 
     searchMovies = (str, type = 'all') => {
         this.setState({loading: true})
-        fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${str}
-            ${type !== 'all' ? `&type=${type}`: ''}`)
-            .then((response) => response.json())
+
+        // return fetch(
+        //     `http://www.omdbapi.com/?apikey=${API_KEY}&s=${str}${
+        //         type !== "all" ? `&type=${type}` : ""
+        //     }`
+        // )
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //         return this.setState({
+        //             movies: data.Search,
+        //             loading: false,
+        //         });
+        //     });
+        return fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${str}${type !== 'all' ? `&type=${type}`: ''}`)
+            .then((response) => {
+                return response.json()
+            })
             .then((data) => this.setState({movies: data.Search, loading: false}))
     }
 
@@ -32,7 +46,7 @@ class Main extends Component {
         return <main className = 'container content'>
             <Search searchMovies = {this.searchMovies} />
             {
-                loading ? <Preloader /> : (<Movies movies ={movies}/>)
+                loading ? <Preloader /> : (<Movies movies={movies}/>)
             }
 
         </main>
